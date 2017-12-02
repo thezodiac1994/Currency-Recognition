@@ -32,11 +32,13 @@ for i in range(len(subNpArray)):
             labelList.append(labels)
 imageNpArray = np.array(imageList)
 labelNpArray = np.array(labelList)
-np.save("input",imageNpArray)
-np.save("output",labelNpArray)
+np.savetxt('train_imagenames.csv', imageNpArray, delimiter=",", fmt="%s")
+np.savetxt('train_labels.csv', labelNpArray, delimiter=",", fmt="%s")
+
+#np.savetxt("output.csv",labelNpArray, delimiter = ",")
 print("Training Data and label created...")
-            
-            
+
+
 
             
             
