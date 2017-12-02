@@ -2,5 +2,8 @@ reqts:
 1) rename label to integers, Maintain a map
 
 2) keep relative path instead of absolute 
-
 Need to think on this.
+
+3) For feature detection use SIFT ?
+
+4) Improve Histogram Matching ? 

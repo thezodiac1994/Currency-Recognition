@@ -1,3 +1,5 @@
+computeDictionary();
+batchToVisualWords();
 buildRecognitionSystem();
 evaluateRecognitionSystem();
 
