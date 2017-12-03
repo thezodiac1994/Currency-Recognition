@@ -1,7 +1,7 @@
 
 # coding: utf-8
 
-# In[89]:
+# In[13]:
 
 
 import numpy as np
@@ -21,19 +21,25 @@ subNpArray = np.array(subFileList)
 
 imageList = []
 labelList = []
+mapList = []
+key=0
 for i in range(len(subNpArray)):
     for j in range(len(subNpArray[i])):
         imageDirPath = os.path.join(subNpArray[i][j],'*.jpg')
-        labels =  re.search('Dataset(.*)*.jpg', imageDirPath.replace("\\",""))
-        labels = labels.group(0).split("Dataset",1)[1].replace("*.jpg","")
+        maplabels =  re.search('Dataset(.*)*.jpg', imageDirPath.replace("\\",""))
+        maplabels = maplabels.group(0).split("Dataset",1)[1].replace("*.jpg","")
         imagePath = glob.glob(imageDirPath)
         for k in range(len(imagePath)):
             imageList.append(imagePath[k])
-            labelList.append(labels)
+            labelList.append(key+1)
+            mapList.append(maplabels)
+        key+=1
 imageNpArray = np.array(imageList)
 labelNpArray = np.array(labelList)
+mapNpArray = np.array(mapList)
 np.save("input",imageNpArray)
 np.save("output",labelNpArray)
+np.save("map",mapNpArray)
 print("Training Data and label created...")
             
             
