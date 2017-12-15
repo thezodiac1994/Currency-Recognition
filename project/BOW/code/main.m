@@ -1,6 +1,6 @@
-computeDictionary();
-batchToVisualWords();
-buildRecognitionSystem();
+%computeDictionary();
+%batchToVisualWords();
+%buildRecognitionSystem();
 evaluateRecognitionSystem();
 
 %[filterBank, dictionary] = getFilterBankAndDictionary(train_imagenames);

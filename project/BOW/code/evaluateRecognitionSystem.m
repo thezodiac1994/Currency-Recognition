@@ -13,7 +13,7 @@ function [conf] = evaluateRecognitionSystem()
 conf = zeros(8,8);
 for i = 1:size(test_imagenames,1)
     pth = test_imagenames{i,1};
-    pth = strcat('../data/',pth);
+    pth = strcat(pth);
     predicted = find (maps == guessImage(pth));
     actual = test_labels(i,1);
     fprintf ('i = %d | a,p =  %d %d\n',i,actual,predicted);

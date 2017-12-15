@@ -9,8 +9,9 @@ function buildRecognitionSystem()
     k = 100;
     histograms = cell (1,size(train_imagenames,1));
     for i = 1:size(train_imagenames,1)
+        i
         pth = train_imagenames{i,1};
-        pth1 = strrep (pth,'.jpg','.mat');
+        pth1 = strrep (strrep (pth,'.jpg','.mat') , '.JPG', '.mat');
         pth1 = strcat(pth1);
         wfile = load(pth1);
         histograms{1,i} = getImageFeaturesSPM(3,wfile.wordMap,k); %this is 21 histograms

@@ -3,23 +3,20 @@ function [] = createDataFiles()
     fid = fopen(f);
     train_imagenames = textscan(fid, '%s', 'Delimiter','\n'); % you will need to change the number   of values to match your file %f for numbers and %s for strings.
     fclose (fid);
-    save('../data/traintest.mat','train_imagenames');
-    all_imagenames = train_imagenames;
-    save('../data/traintest.mat','all_imagenames','-append');
+    save('traintest.mat','train_imagenames');
     
     
     f = '../../train_labels.csv';
     fid = fopen(f);
     train_labels = textscan(fid, '%s', 'Delimiter','\n'); % you will need to change the number   of values to match your file %f for numbers and %s for strings.
     fclose (fid);
-    save('../data/traintest.mat','train_labels','-append');
+    save('traintest.mat','train_labels','-append');
     
     f = '../../uniqueLabels.csv';
     fid = fopen(f);
-    mapping = textscan(fid, '%s', 'Delimiter','\n'); % you will need to change the number   of values to match your file %f for numbers and %s for strings.
-    mapping{1,1} = mapping{1,1}'; % make a row vector 
+    mappi = textscan(fid, '%s', 'Delimiter','\n'); % you will need to change the number   of values to match your file %f for numbers and %s for strings.
     fclose (fid);
-    save('../data/traintest.mat','mapping','-append');
- 
+    save('mapping.mat','labelMap');
+    
     
 end
