@@ -1,3 +1,4 @@
+%createDataFiles();
 %computeDictionary();
 %batchToVisualWords();
 %buildRecognitionSystem();
