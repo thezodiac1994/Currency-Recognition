@@ -1,7 +1,7 @@
 
 # coding: utf-8
 
-# In[100]:
+# In[12]:
 
 
 ############################################################################################
@@ -66,15 +66,15 @@ def imageAugmentation(sourcePath,destPath,i):
     p1 = np.float32([[25,37.5],[100,25],[25,100]])
     p2 = np.float32([[25,50],[100,25],[50,125]])
 
-    Mask1 = cv2.getAffineTransform(pts1,pts2)
-    Mask2 = cv2.getAffineTransform(pts2,pts1)
+    Mask1 = cv2.getAffineTransform(p1,p2)
+    Mask2 = cv2.getAffineTransform(p2,p1)
 
-    affineTransformed1 = cv2.warpAffine(img,M,(cols,rows))
-    dst2 = cv2.warpAffine(img,M2,(cols,rows))
+    affineTransformed1 = cv2.warpAffine(img,Mask1,(img.shape[1],img.shape[0]))
+    affineTransformed2 = cv2.warpAffine(img,Mask2,(img.shape[1],img.shape[0]))
     
     # saving transformed image
-    saveImage(destPath, dst1, "affine1",i)
-    saveImage(destPath, dst2, "affine2", i)
+    saveImage(destPath, affineTransformed1, "affine1",i)
+    saveImage(destPath, affineTransformed2, "affine2", i)
     
     
 ############################################################################################
@@ -84,9 +84,9 @@ def saveImage(destPath, imageToSave,tranformationType, i):
     
 ############################################################################################
 # Extract Data
-def extractData():
+def extractData(dataset,image,label,mapping,uniquelabel):
     print("Extracting Data...")
-    pathToImage =os.path.realpath("Dataset")
+    pathToImage =os.path.realpath(dataset)
     imgPath = os.path.join(pathToImage,'*')
     fileList = glob.glob(imgPath)
     subFileList = []
@@ -102,27 +102,31 @@ def extractData():
     for i in range(len(subNpArray)):
         for j in range(len(subNpArray[i])):
             imageDirPath = os.path.join(subNpArray[i][j],'*.jpg')
-            maplabels =  re.search('Dataset(.*)*.jpg', imageDirPath.replace("\\",""))
-            maplabels = maplabels.group(0).split("Dataset",1)[1].replace("*.jpg","")
+            print(imageDirPath)
+            maplabels =  re.search(dataset+'(.*)*.jpg', imageDirPath.replace("\\",""))
+            maplabels = maplabels.group(0).split(dataset,1)[1].replace("*.jpg","")
             imagePath = glob.glob(imageDirPath)
             for k in range(len(imagePath)):
-                imageList.append(imagePath[0])
+                imageList.append(imagePath[k])
                 labelList.append(key+1)
                 mapList.append(maplabels)
             key+=1
             uniqueMapList.append(maplabels)
+    print(uniqueMapList)
     imageNpArray = np.array(imageList)
     labelNpArray = np.array(labelList)
     mapNpArray = np.array(mapList)
     uniqueNpArray = np.array(uniqueMapList)
-    np.savetxt('uniqueLabels.csv',uniqueNpArray,delimiter=',', fmt = '%s')
-    np.savetxt('train_imagenames.csv',imageNpArray,delimiter=',', fmt = '%s')
-    np.savetxt('train_labels.csv',labelNpArray,delimiter=',', fmt = '%s')
-    np.savetxt('train_mapping.csv',mapNpArray,delimiter=',', fmt = '%s')
+    np.savetxt(uniquelabel+'.csv',uniqueNpArray,delimiter=',', fmt = '%s')
+    np.savetxt(image+'.csv',imageNpArray,delimiter=',', fmt = '%s')
+    np.savetxt(label+'.csv',labelNpArray,delimiter=',', fmt = '%s')
+    np.savetxt(mapping+'.csv',mapNpArray,delimiter=',', fmt = '%s')
     print("Training Data and label created...")
 ############################################################################################
-#createSyntheticImage()
-extractData()
+# createSyntheticImage()
+############################################################################################
+#extractData("Dataset","train_imagenames","train_labels","train_mapping","uniqueLabels");
+extractData("test","test_imagenames","test_labels","test_mapping","uniqueTestLabels");
             
             
 
@@ -132,4 +136,10 @@ extractData()
 
     
   
+
+
+# In[ ]:
+
+
+
 

@@ -4,6 +4,7 @@ function guessedImage = guessImage( imagename )
 %   imagename - path to the image
 
 	%fprintf('[Loading..]\n');
+    display(imagename)
     load('vision.mat');
 	load('../data/traintest.mat','mapping');
     mapping = mapping {1,1};
@@ -15,14 +16,11 @@ function guessedImage = guessImage( imagename )
 	h = getImageFeaturesSPM(3, wordMap, size(dictionary,2));
 	distances = distanceToSet(h, train_features);
     
-    knn = 3;
+    knn = 8;
     knn_labels = cell(1,knn);
     train_labels = train_labels{1,1}
     for i = 1 : knn
         [~,nnI] = max(distances);
-        nnI
-        whos train_labels 
-        whos knn_labels 
         knn_labels{1,i} = train_labels{nnI,1}
         distances(nnI) = -1;
     end
@@ -39,9 +37,7 @@ function guessedImage = guessImage( imagename )
     guessedImage = mode(labelmat(:));
     
     fprintf('[My Guess]:%s.\n',mapping{1,guessedImage});
-
 	%figure(1);
 	%imshow(image);
 	%title('image to classify')
-
 end

@@ -1,7 +1,7 @@
 function [] = createDataFiles()
     f = '../../train_imagenames.csv';
     fid = fopen(f);
-    train_imagenames = textscan(fid, '%s', 'Delimiter','\n'); % you will need to change the number   of values to match your file %f for numbers and %s for strings.
+    train_imagenames = textscan(fid, '%s', 'Delimiter','\n'); % you will need to change the number of values to match your file %f for numbers and %s for strings.
     fclose (fid);
     save('../data/traintest.mat','train_imagenames');
     all_imagenames = train_imagenames;
